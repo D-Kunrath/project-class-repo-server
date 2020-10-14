@@ -53,11 +53,18 @@ router.post("/signup", async (req, res) => {
   }
 
   try {
+    // Verificar se e-mail já está cadastrado.
+    const emailCheck = await User.findOne({ email });
+    
+    if (emailCheck !== null) {
+      console.error('Email', email, 'already exists');
+      return res.status(400).json({ errorMessage: 'Email already registered!'});
+    }
+
     // Gerar o salt
     const salt = await bcrypt.genSalt(saltRounds);
     // Gerar o hash utilizando o salt criado anteriormente e o que o usuario escreveu no campo senha no navegador
     const hashedPassword = await bcrypt.hash(password, salt);
-
     console.log("Hashed password => ", hashedPassword);
 
     // Cria o usuario no banco, passando a senha criptografada
