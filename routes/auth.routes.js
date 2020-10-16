@@ -95,7 +95,7 @@ router.post("/signup", async (req, res) => {
 router.post("/login", async (req, res, next) => {
   passport.authenticate("local", async (err, user, info) => {
     try {
-      console.log("PASSPORT AUTHENTICATE INFO => ", info);
+      // console.log("PASSPORT AUTHENTICATE INFO => ", info);
       // Caso exista erro, encerre a execuçāo desta funçāo
       if (err || !user) {
         return next(info.message);
@@ -127,6 +127,17 @@ router.get(
       message: "You made it to the secure route",
       user: req.user,
       token: req.query.secret_token,
+    });
+  }
+);
+
+router.get(
+  "/githubapi",
+  passport.authenticate("jwt", { session: false }),
+  (req, res, next) => {
+    console.log('githubapi request!')
+    res.json({
+      token: process.env.GITHUB_TOKEN,
     });
   }
 );
