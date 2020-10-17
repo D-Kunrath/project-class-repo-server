@@ -135,7 +135,7 @@ router.get(
   "/githubapi",
   passport.authenticate("jwt", { session: false }),
   (req, res, next) => {
-    console.log('githubapi request!')
+    // console.log('githubapi request!')
     res.json({
       token: process.env.GITHUB_TOKEN,
     });
