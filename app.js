@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json());
 app.use(cors({ origin: process.env.CORS }));
 // app.use(cors({ origin: "http://localhost:3000" }));
-app.use(express.static(path.join(dirname, '/public')));
+app.use(express.static(path.join(__dirname, '/public')));
 app.use((req, res, next) => {
   const hostUrl = req.get("host");
   if (hostUrl.includes("/api") === true) {
